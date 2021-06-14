@@ -1,0 +1,50 @@
+root()
+{
+   if(a>b)
+   {
+      write a;
+   }
+   if(a<b)
+   {
+     write b;
+    }
+   else
+   {	write a;
+    
+   }
+   int c,d; 
+   c=11;
+   d=12;
+   
+   int s;
+   s=c + d;
+   int t;
+   t=c-d;
+   int m;
+   m=c*d;
+   int v;
+    v=c/d;
+   c > d;
+   c >=d;   
+    c < d;
+   c<=d;
+   c!=d;
+   loop from 2 upto 20 step=1:
+   {
+ 	
+   }
+   loop from 20 upto 1 step=2:
+   {
+
+   }
+    int x;
+    x=12;
+    square x;
+    cube x;
+    int y;
+    y=225;
+    sqrt y;
+    y=2;
+    x ^ y;
+	
+}
