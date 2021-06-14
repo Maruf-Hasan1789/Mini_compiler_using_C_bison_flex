@@ -10,7 +10,6 @@
 
 
 
-
 %token  MAIN_FUNC INT FLOAT READ WRITE ADD SUB MUL DIV EXPONEN LN EQUALS LT GT LE GE NE COMA SEMI COLON LPAR RPAR SLPAR SRPAR IF ELSE FOR WHILE MOD UPTO FROM STEP NUM SQR SQRT CUBE VAR ISPRIME
 %nonassoc IFX
 %nonassoc ELSE
@@ -47,7 +46,26 @@ LINE:
 								else
                                     printf("%c not declared\n",$2+97);
 							}
-	
+	| WRITE VAR SEMI		{
+							if(symbol[$2] == 1) 
+                                {
+									printf("%d\n",val_table[$2]);
+								}
+								else
+                                    printf("%c not declared\n",$2+97);
+							
+							}
+	| WRITE VAR EQUALS EXPRESSION SEMI
+						{
+						       if(symbol[$2] == 1) 
+                                {
+                                   val_table[$2]=$4;
+								   printf("\n%d\n",$4);
+								}
+								else
+                                    printf("%c not declared\n",$2+97);
+						
+						}
 	| IF EXPRESSION SLPAR STATEMENTS SRPAR {
 								if($2){
 									printf("\nvalue of expression in IF: %d\n",$4);
@@ -73,19 +91,22 @@ LINE:
 													
 													if($3<=lmt)
 													{
+												
 													for(i=$3;i<lmt;i+=cnt)
 													{
 														printf("%d \n",i);
 													}
+													
 													}
 													else
 													{
-													   printf("A");
+													   printf("Reverse Loop\n");
 													   for(i=$3;i>=lmt;i-=cnt)
 													   {
-													       printf("%d \n",i);
+													       printf("%d\n",i);
 													   }
 													}
+													$$=1;
 													}
 													 
 	
@@ -96,8 +117,12 @@ LINE:
 									printf("%d\n",$2*$2*$2);
 								}
 	| SQRT EXPRESSION SEMI		{
-									printf("%f\n",sqrt($2));
+									int val=$2;
+									printf("square root of %d is %f\n",val,sqrt(val));
+									$$=1;
 								}
+								
+								
 	| ISPRIME LPAR NUM RPAR SEMI	{
 											int n=$3;
 											int flag=0;
@@ -113,10 +138,12 @@ LINE:
 											if(flag)
 											{
 												printf("\nThe number is not Prime\n");
+												$$=1;
 											}
 											else
 											{
 												printf("\nThe number is Prime\n");
+												$$=0;
 											}
 										}
 							
@@ -156,20 +183,20 @@ EXPRESSION: NUM					{ $$ = $1; 	}
 								}
 	
 	| EXPRESSION ADD EXPRESSION	{ $$ = $1 + $3; 
-								   printf("%d",$1+$3);
+								   printf("%d\n",$1+$3);
 								}
 
 	| EXPRESSION SUB EXPRESSION	{ $$ = $1 - $3; 
-								printf("%d",$$);
+								printf("%d\n",$$);
 								}
 
 	| EXPRESSION MUL EXPRESSION	{ $$ = $1 * $3; 
-								printf("%d",$$);
+								printf("%d\n",$$);
 								}
 
 	| EXPRESSION DIV EXPRESSION	{ if($3){
 				     					$$ = $1 / $3;
-										printf("%d",$$);
+										printf("%d\n",$$);
 				  					}
 				  					else{
 										$$ = 0;
@@ -179,7 +206,7 @@ EXPRESSION: NUM					{ $$ = $1; 	}
 								
 	| EXPRESSION MOD EXPRESSION { if($3){
 				     					$$ = $1 % $3;
-										printf("%d",$$);
+										printf("%d\n",$$);
 				  					}
 				  					else{
 										$$ = 0;
@@ -195,7 +222,45 @@ EXPRESSION: NUM					{ $$ = $1; 	}
 								printf("LESS\n");
 								}
 								
+	|  EXPRESSION GE EXPRESSION { int a=$1;
+								 int b=$3;
+								 if(a>=b){
+								     printf("Greater equals\n");
+									 $$=1;
+									 }
+								else{
+									printf("Not greater equal\n");
+									$$=0;
+								}
+								
+								}
+	| EXPRESSION LE EXPRESSION {
+								int a=$1;
+								 int b=$3;
+								 if(a<=b){
+								     printf("Less equals\n");
+									 $$=1;
+									 }
+								else{
+									printf("Not less equal\n");
+									$$=0;
+								}
+								}	
 	| LPAR EXPRESSION RPAR		{ $$ = $2;	}
+	 
+	| VAR NE VAR               {
+								if($1 != $3)
+								 {
+									printf("Not Equal\n");
+									$$=1;
+								}
+								else
+								{
+								  printf("Equal\n");
+								  $$=0;
+								}
+							  }
+	
 	
 	;
 	
