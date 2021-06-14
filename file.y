@@ -260,6 +260,14 @@ EXPRESSION: NUM					{ $$ = $1; 	}
 								  $$=0;
 								}
 							  }
+	| VAR EXPONEN VAR		{ 	int x=val_table[$1];
+								int y=val_table[$3];
+								
+							
+								float val=pow(x,y);
+	                            printf("%f\n",val);
+								$$=val;
+							}
 	
 	
 	;
