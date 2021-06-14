@@ -26,13 +26,11 @@ main   "root()"
 "/"          { return DIV; }
 "^"          { return EXPONEN; }
 "="          { return EQUALS; }
-"lt"         { return LT; }
 "<"			 { return LT; }
-"gt"         { return GT; }
-">"			 { return GT; }
-"le"         { return LE; }
-"ge"         { return GE; }
-"ne"         { return NE; }
+">"         { return GT; }
+"<="         { return LE; }
+">="         { return GE; }
+"!="         { return NE; }
 ","          { return COMA; }
 ";"          { return SEMI; }
 ":"          { return COLON; }
